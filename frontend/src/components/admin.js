@@ -8,7 +8,7 @@ export default function Admin() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8081/flashcards')
+        axios.get('http://localhost:8081/flashcard')
             .then(res => setQue(res.data))
             .catch(err => console.log(err));
     }, []);

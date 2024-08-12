@@ -18,7 +18,7 @@ app.get('/',(re, res)=>{
 })
 
 app.post('/create',(req,res) =>{
-    const sql = "INSERT INTO flashcards(`uid`,`question`,`answer`) VALUES (?)";
+    const sql = "INSERT INTO flashcard(`uid`,`question`,`answer`) VALUES (?)";
     const values = [
         req.body.uid,
         req.body.question,
@@ -31,7 +31,7 @@ app.post('/create',(req,res) =>{
 })
 
 app.put('/update/:uid',(req,res) =>{
-    const sql = "UPDATE flashcards SET question=?,answer=? WHERE uid=?";
+    const sql = "UPDATE flashcard SET question=?,answer=? WHERE uid=?";
     const values = [
         req.body.question,
         req.body.answer
@@ -44,7 +44,7 @@ app.put('/update/:uid',(req,res) =>{
 })
 
 app.delete('/delete/:uid',(req,res) =>{
-    const sql = "DELETE FROM flashcards WHERE uid=?"
+    const sql = "DELETE FROM flashcard WHERE uid=?"
      const uid = req.params.uid;
     db.query(sql,[uid],(err, data) =>{
         if(err) return res.json("Error");
@@ -52,8 +52,8 @@ app.delete('/delete/:uid',(req,res) =>{
     })
 })
 
-app.get('/flashcards',(req,res)=>{
-    const sql = "SELECT * from flashcards"
+app.get('/flashcard',(req,res)=>{
+    const sql = "SELECT * from flashcard"
     db.query(sql, (err,data)=>{
         if(err) return res.json(err);
         else res.json(data);

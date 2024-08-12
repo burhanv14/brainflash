@@ -7,6 +7,8 @@ import Admin from './components/admin';
 import Header from './components/header';
 import CreateFlashCard from './components/CreateFlashCard';
 import UpdateFlashCard from './components/UpdateFlashCard';
+import Loading from './components/loader';
+import { useState ,useEffect} from 'react';
 
 function App() {
   const router = createBrowserRouter([
@@ -31,6 +33,22 @@ function App() {
       element : <UpdateFlashCard/>
     } 
   ])
+
+  const [isLoading,setLoading] = useState(true);
+
+  useEffect(()=>
+  {
+    setTimeout(()=>{
+      setLoading(false);
+    },2000)
+  })
+
+  if(isLoading)
+    return(<div class="max-h-svh max-w-svw">
+        <Loading/>
+      </div>)
+
+
   return (
     <div>
       <RouterProvider router ={router}>
