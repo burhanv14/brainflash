@@ -5,6 +5,7 @@ export default function DisplayCards() {
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
+    const [textKey, setTextKey] = useState(0); // New state to force re-render of text
 
     useEffect(() => {
         fetch('http://localhost:8081/flashcard')
@@ -15,12 +16,20 @@ export default function DisplayCards() {
 
     const handleNext = () => {
         setIsFlipped(false);
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+        setCurrentIndex((prevIndex) => {
+            const newIndex = (prevIndex + 1) % data.length;
+            setTextKey(newIndex); // Trigger re-render with new text
+            return newIndex;
+        });
     };
 
     const handlePrev = () => {
         setIsFlipped(false);
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+        setCurrentIndex((prevIndex) => {
+            const newIndex = (prevIndex - 1 + data.length) % data.length;
+            setTextKey(newIndex); // Trigger re-render with new text
+            return newIndex;
+        });
     };
 
     const handleFlip = () => {
@@ -28,7 +37,7 @@ export default function DisplayCards() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center w-3/4 h-80 bg-blue-300 rounded-lg p-8 pb-6 space-y-8">
+        <div className="flex flex-col items-center justify-center w-3/4 h-80 rounded-lg p-8 pb-6 space-y-8 z-0">
             {data.length > 0 && (
                 <motion.div
                     className={`w-3/4 p-8 rounded-lg shadow-lg perspective-1000`}
@@ -37,20 +46,32 @@ export default function DisplayCards() {
                     transition={{ duration: 0.6 }}
                 >
                     <motion.div
-                        className={`relative w-full h-60 text-white flex items-center justify-center bg-blue-400 rounded-lg cursor-pointer`}
+                        className={`relative w-full h-60 text-white flex items-center justify-center bg-sky-300 rounded-lg cursor-pointer`}
                         onClick={handleFlip}
                         initial={{ rotateY: 0 }}
                         animate={{ rotateY: isFlipped ? 180 : 0 }}
                         transition={{ duration: 0.6 }}
                     >
                         {isFlipped ? (
-                            <div className="absolute w-full h-full flex items-center justify-center text-2xl p-5 pb-3 rounded-lg bg-green-500">
+                            <motion.div
+                                key={textKey} // Key to trigger animation on text change
+                                className="absolute w-full h-full flex items-center justify-center text-2xl p-5 pb-3 rounded-lg bg-green-500"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1.2 }}
+                            >
                                 {data[currentIndex].answer}
-                            </div>
+                            </motion.div>
                         ) : (
-                            <div className="absolute w-full h-full flex items-center justify-center text-2xl p-5 pb-3 rounded-lg font-serif">
+                            <motion.div
+                                key={textKey} // Key to trigger animation on text change
+                                className="absolute w-full h-full flex items-center justify-center text-2xl p-5 pb-3 rounded-lg font-serif"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1.2 }}
+                            >
                                 {data[currentIndex].question}
-                            </div>
+                            </motion.div>
                         )}
                     </motion.div>
                 </motion.div>
