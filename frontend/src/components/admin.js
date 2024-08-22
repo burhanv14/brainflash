@@ -37,9 +37,12 @@ export default function Admin() {
             </header>
             <main class="flex-grow flex justify-center items-center bg-blue-300 p-4">
                 <div class="bg-blue-500 rounded-lg p-4 w-full max-w-4xl">
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex justify-start gap-4 items-center mb-4">
                         <Link to="create" class="bg-blue-800 p-3 text-white rounded hover:bg-blue-900 font-serif">
                             Add a Flashcard
+                        </Link>
+                        <Link to="aigenerate" class="bg-blue-800 p-3 text-white rounded hover:bg-blue-900 font-serif">
+                            AI-Flashcard Generator
                         </Link>
                     </div>
                     <div class="overflow-x-auto">

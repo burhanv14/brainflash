@@ -9,6 +9,8 @@ import CreateFlashCard from './components/CreateFlashCard';
 import UpdateFlashCard from './components/UpdateFlashCard';
 import Loading from './components/loader';
 import { useState ,useEffect} from 'react';
+import Quiz from './components/quiz';
+import Aigenerate from './components/aigenerate';
 
 function App() {
   const router = createBrowserRouter([
@@ -31,7 +33,15 @@ function App() {
     {
       path:"/admin/aNygdehueQ/update/:uid",
       element : <UpdateFlashCard/>
-    } 
+    },
+    {
+      path:"/quiz",
+      element: <Quiz/>
+    },
+    {
+      path:"/admin/aNygdehueQ/aigenerate",
+      element : <Aigenerate/>
+    }
   ])
 
   const [isLoading,setLoading] = useState(true);
